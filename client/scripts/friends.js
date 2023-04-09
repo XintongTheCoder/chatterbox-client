@@ -4,17 +4,16 @@
 
 var Friends = {
   // TODO: Define how you want to store your list of friends.
-  $friend: $('friend'),
-  _data: [],
+  _data: new Set(),
 
-  toggleStatus: (username, $node) => {
-    if (!Friends._data.includes(username)) {
-      $node.addClass('friend');
-      Friends._data.push(username);
+  toggleStatus: (username) => {
+    if (username === App.username) {
+      return;
+    }
+    if (!Friends._data.has(username)) {
+      Friends._data.add(username);
     } else {
-      var index = Friends._data.indexOf(username);
-      $node.removeClass('friend');
-      Friends._data.splice(index, 1);
+      Friends._data.delete(username);
     }
   },
 

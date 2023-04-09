@@ -12,7 +12,7 @@ var Parse = {
       type: 'POST',
       data: JSON.stringify(message),
       contentType: 'application/json',
-      success: successCB,
+      success: successCB, // Upon success, successCB will be involked
       error:
         errorCB ||
         function (error) {

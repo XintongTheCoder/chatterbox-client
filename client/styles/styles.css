@@ -89,3 +89,7 @@ form input[type=text] {
     font-weight: 1200;
 }
 
+.username:hover {
+    cursor: pointer;
+}
+

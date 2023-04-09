@@ -16,35 +16,42 @@ var App = {
 
     // Fetch initial batch of messages
     App.startSpinner();
-    App.fetch(App.stopSpinner);
+    App.fetch(() => {
+      App.stopSpinner();
+      RoomsView.render();
+      MessagesView.render($('option:selected').text());
+    });
 
     // TODO: Make sure the app loads data from the API
     // continually, instead of just once at the start.
+    setInterval(App.fetch, 10000);
   },
 
   fetch: function (callback = () => {}) {
+    // Parse.readAll((data) => {...}); waits for data to be returned and handle the data
     Parse.readAll((data) => {
-      // examine the response from the server request:
+      // Examine the response from the server request:
       console.log(data);
+      // TODO: Use the data to update Messages and Rooms
+      // and re-render the corresponding views.
+      // Filter out all <script> tags
       data = _.map(data, (message) => {
         message.text = (message.text || '').replace(/<(\/)?script>/g, '');
         return message;
       });
 
+      // Get messages
       Messages.setData(data);
+
+      // Get roomnames
       var roomnames = _.map(data, (message) => {
         return message.roomname;
       });
       roomnames = _.uniq(roomnames);
-
       Rooms.setData(roomnames);
-      // TODO: Use the data to update Messages and Rooms
-      // and re-render the corresponding views.
-      MessagesView.render();
-      //$('.username').on('click', MessagesView.handleClick);
-      RoomsView.render();
+      // Only after all above have been executed, callback can be involked
+      callback();
     });
-    callback();
   },
 
   startSpinner: function () {
