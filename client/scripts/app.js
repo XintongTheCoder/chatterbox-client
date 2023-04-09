@@ -26,17 +26,22 @@ var App = {
     Parse.readAll((data) => {
       // examine the response from the server request:
       console.log(data);
+      data = _.map(data, (message) => {
+        message.text = (message.text || '').replace(/<(\/)?script>/g, '');
+        return message;
+      });
+
       Messages.setData(data);
       var roomnames = _.map(data, (message) => {
-        console.log('roomname', message.roomname);
         return message.roomname;
       });
       roomnames = _.uniq(roomnames);
-      console.log('here' + roomnames);
+
       Rooms.setData(roomnames);
       // TODO: Use the data to update Messages and Rooms
       // and re-render the corresponding views.
       MessagesView.render();
+      //$('.username').on('click', MessagesView.handleClick);
       RoomsView.render();
     });
     callback();

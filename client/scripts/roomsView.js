@@ -8,31 +8,36 @@ var RoomsView = {
   initialize: function () {
     // TODO: Perform any work which needs to be done
     // when this view loads.
+    RoomsView.$button.on('click', RoomsView.handleClick);
+    RoomsView.$select.on('change', RoomsView.handleChange);
   },
 
   render: function () {
     // TODO: Render out the list of rooms.
-    Rooms.getData().forEach((filteredRoom) => {
-      this.renderRoom(filteredRoom);
+    RoomsView.$select.empty();
+    Rooms.getData().forEach((roomname) => {
+      this.renderRoom(roomname);
     });
   },
 
   renderRoom: function (roomname) {
     // TODO: Render out a single room.
     $('#rooms select').append(
-      _.template(`
-    <div class="room">
-      <div class="roomname"><%= roomname %></div>
-    </div>
-  `)
+      '<option class="roomname">' + roomname + '</option>'
     );
   },
 
   handleChange: function (event) {
     // TODO: Handle a user selecting a different room.
+    //console.log($('option:selected').text());
+    var roomname = $('option:selected').text(); // chats only have this roomname 's message
+    MessagesView.render(roomname);
   },
 
   handleClick: function (event) {
     // TODO: Handle the user clicking the "Add Room" button.
+    var roomname = window.prompt('Please enter your room name: ');
+    Rooms.add(roomname);
+    RoomsView.render();
   },
 };

@@ -7,10 +7,13 @@ var Rooms = {
   _data: [],
 
   setData: (data) => {
-    this._data = data;
+    Rooms._data = data;
   },
   getData: () => {
-    return this._data;
+    return Rooms._data;
+  },
+  add: (roomname) => {
+    Rooms._data.push(roomname);
   },
   // TODO: Define methods which allow you to add rooms, update the list,
   // mark a room as selected, etc.
