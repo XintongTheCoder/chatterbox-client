@@ -19,7 +19,7 @@ var App = {
     App.fetch(() => {
       App.stopSpinner();
       RoomsView.render();
-      MessagesView.render($('option:selected').text());
+      MessagesView.render(Rooms.getSelected());
     });
 
     // TODO: Make sure the app loads data from the API
@@ -34,11 +34,11 @@ var App = {
       console.log(data);
       // TODO: Use the data to update Messages and Rooms
       // and re-render the corresponding views.
-      // Filter out all <script> tags
-      data = _.map(data, (message) => {
-        message.text = (message.text || '').replace(/<(\/)?script>/g, '');
-        return message;
-      });
+      // Filter out all <script> tags, can use _.template(<%-   %>) instead
+      // data = _.map(data, (message) => {
+      //   message.text = (message.text || '').replace(/<(\/)?script>/g, '');
+      //   return message;
+      // });
 
       // Get messages
       Messages.setData(data);

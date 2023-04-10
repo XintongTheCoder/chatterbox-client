@@ -15,6 +15,7 @@ var Rooms = {
   add: (roomname) => {
     Rooms._data.push(roomname);
   },
+  getSelected: () => $('option:selected').text(), // NOTE: here should not use selected: $(...), otherwise it won't be updated once assigned
   // TODO: Define methods which allow you to add rooms, update the list,
   // mark a room as selected, etc.
 };

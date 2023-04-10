@@ -21,7 +21,7 @@ var FormView = {
       {
         username: App.username,
         text: newMessage,
-        roomname: $('option:selected').text(),
+        roomname: Rooms.getSelected() || 'lobby',
       },
       () => {
         FormView.setStatus();

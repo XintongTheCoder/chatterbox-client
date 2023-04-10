@@ -7,7 +7,7 @@ var MessagesView = {
   initialize: function () {
     // TODO: Perform any work which needs to be done
     // when this view loads.
-    MessagesView.$chats.on('click', MessagesView.handleClick);
+    MessagesView.$chats.on('click', '.username', MessagesView.handleClick);
   },
 
   render: function (roomname) {
@@ -26,12 +26,7 @@ var MessagesView = {
       .forEach((message) => {
         if (Friends.getData().has(message.username)) {
         }
-        MessagesView.renderMessage({
-          ...message,
-          friendClass: Friends.getData().has(message.username)
-            ? 'friend'
-            : 'normal',
-        });
+        MessagesView.renderMessage(message);
       });
   },
 
@@ -45,11 +40,11 @@ var MessagesView = {
   handleClick: function (event) {
     // TODO: handle a user clicking on a message
     // (this should add the sender to the user's friend list).
-    var username;
-    if ($(event.target).attr('class') === 'username') {
-      username = event.target.innerHTML;
-      Friends.toggleStatus(username);
-      MessagesView.render($('option:selected').text());
+    var username = $(event.target).data('username');
+    if (username === undefined) {
+      return;
     }
+    Friends.toggleStatus(username);
+    MessagesView.render(Rooms.getSelected());
   },
 };

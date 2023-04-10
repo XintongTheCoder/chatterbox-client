@@ -29,8 +29,8 @@ var RoomsView = {
 
   handleChange: function (event) {
     // TODO: Handle a user selecting a different room.
-    //console.log($('option:selected').text());
-    var roomname = $('option:selected').text(); // chats only have this roomname 's message
+    var roomname = Rooms.getSelected();
+    // var roomname = $('option:selected').text(); // chats only have this roomname 's message
     MessagesView.render(roomname);
   },
 

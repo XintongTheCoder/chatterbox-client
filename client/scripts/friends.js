@@ -17,6 +17,10 @@ var Friends = {
     }
   },
 
+  isFriend: (username) => {
+    return Friends._data.has(username);
+  },
+
   getData: () => {
     return Friends._data;
   },
